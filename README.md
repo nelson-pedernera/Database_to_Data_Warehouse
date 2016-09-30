@@ -46,4 +46,4 @@ We have 3 situations: <br />
   . The table is new for Redshift. So we scan the avro schema .avsc file for the table and use "create table" commands to initilize the table with all the columns. Remeber to handle the date type can cast the Java String back to timestamp in Redshift. Then we call COPY commands to unload the S3 data to Redshift.<br />
   . The table exists but schema changed. So we use the step 3 results to generate the "alter table add columns" commands to adjust the Redshift schema and put default values in the new columns. And then it is no difference from the table merge without schema changes.<br />
   . Table exists and schema not changed. We create a temp table called stage in Redshift and COPY the S3 data into it. Then we delte the rows whose primary id is equal to the temp table's id. Finally we insert the temp table into the current Redshift table. This is a transaction process.<br />
-
+Presentation Slide is here: http://bit.ly/2dLW5q6

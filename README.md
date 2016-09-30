@@ -1,7 +1,7 @@
 # Database_to_Data_Warehouse
-Data Pipeline built for transferring data from RDS to Redshift in the AWS cloud
-Data scientists need to use data warehouse to generate data dashboards and run machine learning algorithms. But usually the source of user activities are saved in relational database or MySQL. Since a lot of companies are hosted on AWS, this project tried to build up a stable transfer pipeline from Amazon RDS to Redshift for everyday usage to update the Redshift with the latest data created in RDS.
-<img width="485" alt="background" src="https://cloud.githubusercontent.com/assets/17118374/19009766/e8eb1bfc-872b-11e6-9aa1-08ed35146502.png">
+Data Pipeline built for transferring data from RDS to Redshift in the AWS cloud<br />
+Data scientists need to use data warehouse to generate data dashboards and run machine learning algorithms. But usually the source of user activities are saved in relational database or MySQL. Since a lot of companies are hosted on AWS, this project tried to build up a stable transfer pipeline from Amazon RDS to Redshift for everyday usage to update the Redshift with the latest data created in RDS.<br />
+<img width="485" alt="background" src="https://cloud.githubusercontent.com/assets/17118374/19009766/e8eb1bfc-872b-11e6-9aa1-08ed35146502.png"><br />
 This project tried to construct a stable data pipeline that transfers data from RDS to Redshift even with schema changes
 The challenges are:<br />
 1. Transfer the data in a manner that involved with minimal amount of data (instead of droping and copying entire tables each time)<br />
@@ -47,6 +47,6 @@ We have 3 situations: <br />
   . The table is new for Redshift. So we scan the avro schema .avsc file for the table and use "create table" commands to initilize the table with all the columns. Remeber to handle the date type can cast the Java String back to timestamp in Redshift. Then we call COPY commands to unload the S3 data to Redshift.<br />
   . The table exists but schema changed. So we use the step 3 results to generate the "alter table add columns" commands to adjust the Redshift schema and put default values in the new columns. And then it is no difference from the table merge without schema changes.<br />
   . Table exists and schema not changed. We create a temp table called stage in Redshift and COPY the S3 data into it. Then we delte the rows whose primary id is equal to the temp table's id. Finally we insert the temp table into the current Redshift table. This is a transaction process.<br />
- <img width="566" alt="schema_check" src="https://cloud.githubusercontent.com/assets/17118374/19009915/cdb5f4d6-872d-11e6-84eb-21900a5b270f.png">
+ <img width="566" alt="schema_check" src="https://cloud.githubusercontent.com/assets/17118374/19009915/cdb5f4d6-872d-11e6-84eb-21900a5b270f.png"><br />
 
 Presentation slide is at: http://bit.ly/2dLW5q6

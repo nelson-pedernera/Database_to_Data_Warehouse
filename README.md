@@ -49,4 +49,4 @@ We have 3 situations: <br />
   . Table exists and schema not changed. We create a temp table called stage in Redshift and COPY the S3 data into it. Then we delte the rows whose primary id is equal to the temp table's id. Finally we insert the temp table into the current Redshift table. This is a transaction process.<br />
  <img width="566" alt="schema_check" src="https://cloud.githubusercontent.com/assets/17118374/19009915/cdb5f4d6-872d-11e6-84eb-21900a5b270f.png"><br />
 
-Presentation slide is at: http://bit.ly/2dLW5q6
+Presentation slide is at: http://bit.ly/2dGrfuG
